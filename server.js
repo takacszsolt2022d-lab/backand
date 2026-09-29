@@ -5,23 +5,23 @@ const PORT = 3000;
 app.use(express.json());
 // Memóriabeli adatbázis (kezdeti adatok)
 let diakok = [
-
-{ id: 101, nev: "Kovács Péter", szak: "Szoftverfejlesztő" },
-{ id: 102, nev: "Nagy Anna", szak: "Hálózatépítő" }
+    { id: 101, nev: "Kovács Péter", szak: "Szoftverfejlesztő" },
+    { id: 102, nev: "Nagy Anna", szak: "Hálózatépítő" }
 ];
 // 1. READ (GET): Összes diák lekérése
 app.get('/api/diakok', (req, res) => {
     res.status(200).json(diakok);
 });
 
-
-
 app.post('/api/diakok', (req, res) => {
+    const { nev, szak } = req.body;
+
     const ujdiak ={
         id: diakok.length > 0 ? diakok[diakok.length - 1].id + 1 : 101,
-        nev: req.body.nev,
-        szak: req.body.szak
+        nev,
+        szak
     };
+
     diakok.push(ujdiak);
     res.status(201).json(ujdiak);
 });
